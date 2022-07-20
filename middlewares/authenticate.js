@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { User } = require('../models/user');
 const { createError } = require('../helpers');
 const { SECRET_KEY } = process.env;
 
@@ -8,14 +8,14 @@ const authenticate = async (req, res, next) => {
     const { authorization = '' } = req.headers;
     const [bearer, token] = authorization.split(' ');
     if (bearer !== 'Bearer') {
-      throw createError(401, 'Not authorized 1');
+      throw createError(401, 'Not authorized (No token)');
     }
     console.log(authorization);
     try {
       const { id } = jwt.verify(token, SECRET_KEY);
       const user = await User.findById(id);
       if (!user || !user.token) {
-        throw createError(401, 'Not authorized 2');
+        throw createError(401, 'Not authorized');
       }
       console.log(id);
       console.log(user);
@@ -23,7 +23,7 @@ const authenticate = async (req, res, next) => {
       req.user = user;
       next();
     } catch (error) {
-      throw createError(401, 'Not authorized 3');
+      throw createError(401, 'Not authorized (Wrong token)');
     }
   } catch (error) {
     next(error);

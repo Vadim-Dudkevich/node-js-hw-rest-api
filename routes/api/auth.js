@@ -1,11 +1,8 @@
 const express = require('express');
 const { ctrlWrapper } = require('../../helpers');
-
 const { validation, authenticate } = require('../../middlewares');
 const { schemas } = require('../../models/user.js');
-
 const ctrl = require('../../controllers/auth');
-
 const router = express.Router();
 
 // ! ============= signUp
