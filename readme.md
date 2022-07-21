@@ -1,6 +1,6 @@
 # Hi there 👋, I`m Vadim!
 
-## HW4-auth Node.js:
+## HW5-avatars Node.js:
 
 ### Connect with me:
 
