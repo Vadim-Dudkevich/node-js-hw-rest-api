@@ -5,23 +5,33 @@ const { schemas } = require('../../models/user.js');
 const ctrl = require('../../controllers/auth');
 const router = express.Router();
 
-// ! ============= signUp
+//  ============= signUp
 router.post(
   '/register',
   validation(schemas.register),
   ctrlWrapper(ctrl.register)
 );
 
-// ! ============= signIn
+//  ============= sendEmail
+router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verifyEmail));
+
+//  ============= resendEmail
+router.post(
+  '/verify',
+  validation(schemas.email),
+  ctrlWrapper(ctrl.resendVerifyEmail)
+);
+
+//  ============= signIn
 router.post('/login', validation(schemas.login), ctrlWrapper(ctrl.login));
 
-// ! ============= getCurrent
+//  ============= getCurrent
 router.get('/current', authenticate, ctrlWrapper(ctrl.getCurrent));
 
-// ! ============= logout
+//  ============= logout
 router.get('/logout', authenticate, ctrlWrapper(ctrl.logout));
 
-// ! ============= avatar
+//  ============= avatar
 router.patch(
   '/avatars',
   authenticate,
